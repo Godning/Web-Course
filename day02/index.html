@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no" />
+    <title>基于Bootstrap制作树形菜单</title>
+    <link rel="stylesheet" type="text/css" href="../assets/bootstrap/css/bootstrap.css">
+    <!-- 2.CSS样式 -->
+    <style type="text/css">
+		ul{margin:0;padding:0 0 0 40px;list-style:none;}
+		.tree{padding:20px 0;}
+		.tree li{position:relative;padding:10px 5px 0;}
+		.tree li::before,.tree li::after{content:'';position:absolute;left:-20px;}
+		.tree li::before{top:0;bottom:50px;width:1px;height:100%;background-color:#ccc;}
+		.tree li::after{top:25px;width:25px;height:1px;background-color:#ccc;}
+
+		.tree li span{display:inline-block;padding:3px 10px;border:1px solid #ccc;border-radius:5px;}
+		.tree li span i{margin-right:3px;}
+
+		.tree > ul > li::before,.tree > ul > li::after{background:transparent;}
+		.tree li > span:hover,.tree li.parent > span:hover + ul span{background-color:#eee;}
+    </style>
+</head>
+
+<body>
+<!-- 1.HTML结构(语义化) -->
+    <div class="tree">
+        <ul>
+            <li>
+                <span><i class="glyphicon glyphicon-minus-sign"></i>Parent</span>
+                <ul>
+                    <li>
+                        <span><i class="glyphicon glyphicon-minus-sign"></i>Child</span>
+                        <ul>
+                            <li><span><i class="glyphicon glyphicon-list-alt"></i>Grand Child</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span><i class="glyphicon glyphicon-minus-sign"></i>Child 2</span>
+                        <ul>
+                            <li><span><i class="glyphicon glyphicon-list-alt"></i>Grand Child</span></li>
+                            <li><span><i class="glyphicon glyphicon-minus-sign"></i>Grand Child</span>
+                                <ul>
+                                    <li><span><i class="glyphicon glyphicon-minus-sign"></i>Great Grand Child 1</span>
+                                        <ul>
+                                            <li><span><i class="glyphicon glyphicon-list-alt"></i>Great great Grand Child</span></li>
+                                        </ul>
+                                    </li>
+                                    <li><span><i class="glyphicon glyphicon-list-alt"></i>Great Grand Child 2</span></li>
+                                    <li><span><i class="glyphicon glyphicon-list-alt"></i>Great Grand Child 3</span></li>
+                                </ul>
+                            </li>
+                            <li><span><i class="glyphicon glyphicon-list-alt"></i>Grand Child</span></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <span><i class="glyphicon glyphicon-minus-sign"></i>Parent 2</span>
+                <ul>
+                    <li>
+                        <span><i class="glyphicon glyphicon-list-alt"></i>Child</span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- 3.JS -->
+    <script type="text/javascript" src="../assets/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	$('.tree li:has(ul)').addClass('parent');
+    	$('.tree li.parent').on('click','>span',function(){
+    		var $childMenu = $(this).closest('li').find('>ul');
+    		var $self = $(this);
+    		if($childMenu.is(':visible')){
+    			$childMenu.slideUp(200,function(){
+    				$self.find('i').removeClass('glyphicon-minus-sign').addClass('glyphicon-plus-sign');
+    			});
+    			
+    		}else{
+    			$childMenu.slideDown(200,function(){
+    				$self.find('i').removeClass('glyphicon-plus-sign').addClass('glyphicon-minus-sign');
+    			});
+    			
+    		}
+    	});
+    });
+    </script>
+</body>
+
+</html>
